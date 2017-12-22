@@ -28,6 +28,9 @@ var assembleKey1 = function(parameters) {
           console.log(results);
        });
 
+// Supposed to call the quiz api when the button is clicked
+document.getElementById("button1").addEventListener("click", function() )
+
        var assembleKey1 = function(parameters) {
          var para_list = [];
          for (var key in parameters) {
