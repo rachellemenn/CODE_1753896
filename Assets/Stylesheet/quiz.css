@@ -83,7 +83,8 @@ body, * {
   text-align: center;
 }
 
-.button1 h2 {
+.button1 input {
+  outline: none;
   font-family: "Barlow Condensed", sans-serif;
   color: white;
   font-size: 70px;
@@ -97,6 +98,12 @@ body, * {
   border-radius: 20px;
   padding: 30px;
 
+}
+
+.button1 input:hover {
+  opacity: 0.8;
+  /* color: hsl(24, 100%, 50%); */
+  cursor: pointer;
 }
 
 .button2 h2 {
