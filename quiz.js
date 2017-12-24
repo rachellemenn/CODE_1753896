@@ -15,13 +15,29 @@ var assembleQuery1 = function(parameters) {
    return query_string.join("&");
  }
 
-  var processResponse = function(response) {
-   var output_div = document.querySelector("#output")
-   var question = response.items;
-   for(var i = 0; i < question.length; i ++) {
-     var question = question[i].question;
-  }
+ var extractParameters = function() {
+   var query = window.location.hash.substring(1);
+   var params = query.split ("&");
+
+   var return_data = {};
+   for(var i = 0; i <params.length; i++) {
+       var keyvalue = params[i].split(",");
+       return_data[keyvalue[0]] = keyvalue[1];
+   }
+   return return_data;
  }
+
+  // var processResponse = function() {
+   // var output_div = document.querySelector("#output")
+ //   var question = params[i].split(":");
+ //   processResponse[question[3] = question[1] ];
+ // }
+ // return processResponse
+
+   // response.items;
+   // for(var i = 0; i < question.length; i ++) {
+   //   var question = question[i].question;
+
 
 // Code to assemble api link request correctly
 
