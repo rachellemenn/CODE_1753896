@@ -8,19 +8,20 @@ var assembleQuery1 = function(parameters) {
   for (var key in parameters) {
      if (parameters.hasOwnProperty(key)) {
        var param_string = encodeURIComponent(key) + "=" + encodeURIComponent(parameters[key]);
-       query_list.push(param_string);
+       query_string.push(param_string);
      }
 
   }
-   return para_list.join("&");
+   return query_string.join("&");
+ }
 
- // var processResponse = function(response) {
-//   var output_div = document.querySelector("#output")
-//   var question = response.items;
-//   for(var i = 0; i < question.length; i ++) {
-//     var question = question[i].question;
-//   }
-// }
+  var processResponse = function(response) {
+   var output_div = document.querySelector("#output")
+   var question = response.items;
+   for(var i = 0; i < question.length; i ++) {
+     var question = question[i].question;
+  }
+ }
 
 // Code to assemble api link request correctly
 
@@ -41,14 +42,14 @@ var assembleQuery1 = function(parameters) {
            console.log(results);
         });
 
-// var quizQuestion=function() {
+var quizQuestion=function() {
  var xhttp = new XMLHttpRequest();
  xhttp.addEventListener("load", parseResponse);
- xhttp.open("GET", query_url);
+ xhttp.open("GET", url);
  xhttp.send();
-   // console.log(response);
-   // processResponse(response);
-// }
+    console.log(response);
+    processResponse(response);
+ }
 
 
 // Supposed to call the quiz api when the button is clicked
