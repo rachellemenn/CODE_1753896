@@ -44,7 +44,7 @@ var assembleQuery1 = function(parameters) {
 
 var quizQuestion=function() {
  var xhttp = new XMLHttpRequest();
- xhttp.addEventListener("load", parseResponse);
+ xhttp.addEventListener("load", parseResponse());
  xhttp.open("GET", url);
  xhttp.send();
     console.log(response);

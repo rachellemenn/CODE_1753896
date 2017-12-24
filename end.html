@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>A Fun Quiz</title>
   <link rel="stylesheet" href="Assets/Stylesheet/quiz.css">
-  <!-- <link href="https://fonts.googleapis.com/css?family=" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed" rel="stylesheet">
   <!--Insert fonts-->
   <meta name="viewport" content="width=device-width" , inital-scale="1.0">
 </head>
@@ -13,9 +13,26 @@
 <body>
   <script src="quiz.js"></script>
 
-  <div class="button2">
-    <h2>HOW DID I DO?</h2>
+  <div class="flex-container1">
+    <div class="title1">
+      <ul>
+        <li>A Fun Quiz</li>
+        <li>
+          <form>
+             <div class="button2">
+                 <input type="button" id="button2" onclick="location.href='quiz.html';" value="START OVER">
+             </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+  <div id=output>
   </div>
-
-</body>
-</html>
+  <form>
+     <div class="button1">
+         <input type="button" id="button1" onclick="location.href='results.html';" value="HOW DID I DO?">
+     </div>
+      </form>
+    </div>
+  </body>
+  </html>
