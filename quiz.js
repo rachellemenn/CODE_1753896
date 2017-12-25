@@ -1,8 +1,3 @@
-// var parseResponse = function() {
-//   var response = JSON.parse(this.response);
-//   console.log(response);
-// }
-
 // Defines how the url will be constructed
 var assembleQuery1 = function(parameters) {
   var query_string = [];
@@ -92,17 +87,6 @@ function NextQuestion()
    return return_data;
  }
 
-  // var processResponse = function() {
-   // var output_div = document.querySelector("#output")
- //   var question = params[i].split(":");
- //   processResponse[question[3] = question[1] ];
- // }
- // return processResponse
-
-   // response.items;
-   // for(var i = 0; i < question.length; i ++) {
-   //   var question = question[i].question;
-
 
 // Code to assemble api link request correctly
    var url = "https://opentdb.com/api.php";
@@ -143,17 +127,6 @@ function NextQuestion()
         });
 
 
-
-// var quizQuestion=function() {
-//  var xhttp = new XMLHttpRequest();
-//  xhttp.addEventListener("load", parseResponse());
-//  xhttp.open("GET", url);
-//  xhttp.send();
-//     console.log(response);
-//     processResponse(response);
-//  }
-//
-// if
 
 function checkResult()
 {
