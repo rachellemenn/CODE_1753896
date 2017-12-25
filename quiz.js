@@ -45,7 +45,9 @@ function NextQuestion()
 	state.nextQuestion++;
 	if (state.nextQuestion >= questions.length)
 	{
-      document.getElementById("button1").input = value="SUBMIT";
+      // var newButton = document.getElementById("button");
+      // newButton += '<input type="button" onclick="location.href='results.html';" value="SUBMIT"';
+
       // document.getElementById("button1")
 
     //done
@@ -61,7 +63,7 @@ function NextQuestion()
 		}
 
 		document.getElementById("question").innerHTML = questions[state.nextQuestion].question;
-		var radioHtml = '';
+		var radioHtml = '<br><br>';
 
 		for (var i in questions[state.nextQuestion].answers)
 		{

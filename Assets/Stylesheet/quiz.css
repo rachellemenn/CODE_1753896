@@ -76,7 +76,13 @@ body, * {
   text-align: center;
 }
 
-#button1 input {
+#button {
+  padding-top: 50px;
+  align-items: center;
+  padding-right: 50px;
+}
+
+#button input {
   outline: none;
   font-family: "Barlow Condensed", sans-serif;
   color: white;
@@ -89,7 +95,7 @@ body, * {
   border-radius: 20px;
 }
 
-#button1 input:hover {
+#button input:hover {
   opacity: 0.8;
   cursor: pointer;
 }
@@ -104,10 +110,10 @@ body, * {
   align-items: center;
   padding-top: 50px;
   padding-left: 100px;
-  max-width: 100vw;
+  max-width: 80vw;
 }
 
-.title1 {
+.title1 a {
   color: hsl(24, 100%, 50%);
   font-family: "Barlow Condensed", sans-serif;
   font-size: 30px;
@@ -121,6 +127,9 @@ body, * {
   flex-grow: 1;
   width: 33%; */
 }
+/* .title1 a {
+  text-decoration: none;
+} */
 
 /* .title1 ul {
   display: flex;
@@ -137,7 +146,7 @@ body, * {
    padding-left: 100px;
 } */
 
-#output #question radioHtml {
+ #question {
   color: hsl(0, 0%, 45%);
   font-family: "Barlow Condensed", sans-serif;
   font-size: 30px;
@@ -145,6 +154,16 @@ body, * {
   display: inline;
   padding-bottom: 70px;
   text-align: center;
+}
+
+#answers {
+ color: hsl(0, 0%, 45%);
+ font-family: "Barlow Condensed", sans-serif;
+ font-size: 30px;
+ text-decoration: none;
+ display: inline;
+ padding-bottom: 70px;
+ text-align: center;
 }
 
 .output1 {
