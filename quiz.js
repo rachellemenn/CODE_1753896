@@ -62,7 +62,8 @@ function NextQuestion()
 			state.correctAnswers = 0;
 		}
 
-		document.getElementById("question").innerHTML = questions[state.nextQuestion].question;
+    // Creates a radio button into which the question and answers are inputed
+    document.getElementById("question").innerHTML = questions[state.nextQuestion].question;
 		var radioHtml = '<br><br>';
 
 		for (var i in questions[state.nextQuestion].answers)
@@ -74,11 +75,11 @@ function NextQuestion()
 			radioHtml += '/><label>' + questions[state.nextQuestion].answers[i].value +'</label><br/>';
 		}
 		console.log(radioHtml);
-		document.getElementById("answers").innerHTML = radioHtml;
+		document.getElementById("answers").innerHTML = radioHtml
 	}
 
 }
-
+  // prints to the html
   var extractParameters = function() {
     var query = window.location.hash.substring(1);
     var params = query.split ("&");
