@@ -76,7 +76,7 @@ body, * {
   text-align: center;
 }
 
-.button1 input {
+#button1 input {
   outline: none;
   font-family: "Barlow Condensed", sans-serif;
   color: white;
@@ -89,7 +89,7 @@ body, * {
   border-radius: 20px;
 }
 
-.button1 input:hover {
+#button1 input:hover {
   opacity: 0.8;
   cursor: pointer;
 }
@@ -137,7 +137,7 @@ body, * {
    padding-left: 100px;
 } */
 
-.output {
+#output #question radioHtml {
   color: hsl(0, 0%, 45%);
   font-family: "Barlow Condensed", sans-serif;
   font-size: 30px;
