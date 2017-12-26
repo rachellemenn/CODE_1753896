@@ -6,32 +6,36 @@
   <title>A Very Random Quiz</title>
   <link rel="stylesheet" href="Assets/Stylesheet/quiz.css">
   <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed" rel="stylesheet">
-  <!--Insert fonts-->
   <meta name="viewport" content="width=device-width" , inital-scale="1.0">
 </head>
 
 <body>
   <div class="flex-container1">
     <div class="title1">
-      <h1><a href="quiz.html">A Very Random<span class="quiz">Quiz</span></a></h1>
+      <h1><a href="quiz.html">A Very Random&nbsp;<span class="quiz">Quiz</span></a></h1>
     </div>
-  <div id=output>
-  </div>
-  <!-- <form> -->
+    <div id=output>
+    </div>
     <div id="question">
+      This is a question we are asking, but the question is a very long one. This question is a very very long one.
     </div>
     <div id="answers">
+      <label><input type="radio" id="0" name="answerValue" value="o" checked="checked"/><span>Central Processing Unit</span></label><br/>
+      <label><input type="radio" id="0" name="answerValue" value="o" checked="checked"/><span>Central Processing Unit</span></label><br/>
+      <label><input type="radio" id="0" name="answerValue" value="o" checked="checked"/><span>Central Processing Unit</span></label><br/>
+      <label><input type="radio" id="0" name="answerValue" value="o" checked="checked"/><span>Central Processing Unit</span></label><br/>
       <!-- <input type="radio" name="answerValue" value="0" checked="checked"/><label></label><br><br>
       <input type="radio" name="answerValue" value="1"/><label></label><br><br>
       <input type="radio" name="answerValue" value="2"/><label></label><br><br>
       <input type="radio" name="answerValue" value="3"/><label></label><br><br>
       <input type="radio" name="answerValue" value="3"/><label></label><br><br> -->
     </div>
-     <div id="button">
-         <input type="button" id="button1" value="NEXT">
-     </div>
-      <!-- </form> -->
+    <div id="button">
+      <input type="button" id="button1" value="NEXT">
     </div>
-    <script src="quiz.js"></script>
-  </body>
-  </html>
+    <!-- </form> -->
+  </div>
+  <script src="quiz.js"></script>
+</body>
+
+</html>

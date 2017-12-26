@@ -1,3 +1,8 @@
+var questions;
+var state;
+var joke;
+var quote;
+
 // Defines how the url will be constructed
 var assembleQuery1 = function(parameters) {
   var query_string = [];
@@ -6,13 +11,13 @@ var assembleQuery1 = function(parameters) {
       var param_string = encodeURIComponent(key) + "=" + encodeURIComponent(parameters[key]);
       query_string.push(param_string);
     }
-
   }
+
   // Calls to construct url
   return query_string.join("&");
 }
 
-
+// Shuffles an array randomly
 function shuffle(a) {
   var counter;
   for (var counter = a.length; counter > 0;) {
@@ -24,178 +29,204 @@ function shuffle(a) {
   }
 }
 
-// when the quiz starts it will start at
-// index -1 and there will be 0 correct answer
-var questions;
-var state = {
-  nextQuestion: -1,
-  correctAnswers: 0
+// Reload data
+function reloadData() {
+  console.log("loading data");
+  // Code to assemble api link request correctly
+  var url = "https://opentdb.com/api.php";
+  let params = {
+    amount: "5"
+  }
+
+  var query_url = url + "?" + assembleQuery1(params);
+  console.log(query_url);
+
+  fetch(query_url)
+    .then(function(response) {
+      return response.json();
+    })
+    // Creates a new function to store an array of questions
+    .then(function(data) {
+      questions = new Array();
+      for (var i in data.results) {
+        // Grabs a question
+        var question = data.results[i];
+        var q = new Array();
+        for (var j in question.incorrect_answers) {
+          // pushes incorrect answers into a new array
+          q.push({
+            correct: 0,
+            value: question.incorrect_answers[j]
+          });
+        }
+        q.push({
+          correct: 1,
+          value: question.correct_answer
+        });
+        // shuffles answers so correct answer isn't always in the same place
+        shuffle(q);
+        // after shuffling push into an object with a question and an array of answers
+        questions.push({
+          question: question.question,
+          answers: q
+        });
+      }
+      // console.log(data);
+      shuffle(questions);
+      // console.log(questions);
+      // NextQuestion();
+    });
+
+  // code to request dad joke api
+  query_url = "https://icanhazdadjoke.com/";
+  console.log(query_url);
+  var request = new Request(query_url, {
+    headers: new Headers({
+      'Accept': 'text/plain'
+    })
+  });
+
+  fetch(request)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(data) {
+      joke = data;
+      console.log(data);
+    });
+
+  // The link as been altered so that the error was bypassed
+  url = "https://cors-anywhere.herokuapp.com/http://quotesondesign.com/wp-json/posts";
+  params = {
+    filterOrderBy: "rand",
+    filterPostsPerPage: "1"
+  };
+
+  query_url = url + "?" + assembleQuery1(params);
+  console.log(query_url);
+
+  fetch(query_url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      var results = data;
+      console.log(results);
+      quote = {
+        author: results[0].title,
+        quote: results[0].content
+      };
+    })
+
+  state = {
+    nextQuestion: -1,
+    correctAnswers: 0
+  }
 }
 
 // This function makes sure that the quiz continues
 // until the question limit is reached (5).
 // Then the quiz will end
-function NextQuestion() {
+function nextQuestion() {
+  // Advance
   state.nextQuestion++;
+
+  // All done, no more questions
   if (state.nextQuestion >= questions.length) {
-    // var newButton = document.getElementById("button");
-    // newButton += '<input type="button" onclick="location.href='results.html';" value="SUBMIT"';
 
-    // document.getElementById("button1")
+    // Find and hide answers section
+    var a = document.getElementById("answers");
+    a.style.visibility = "hidden";
 
-    //done
-    // set questions to -1
-    // document.navigate where I will be able to tell how many correct questions there are
-    // sessionid attach it to every request
-  } else {
-    if (state.nextQuestion === 0) {
-      state.correctAnswers = 0;
+    // Find question pane and the button
+    var q = document.getElementById("question");
+    var b = document.getElementById("button1");
+
+    // If 4 or 5 correct answers - we passed
+    if (state.correctAnswers > 3) {
+      q.innerHTML = joke;
+      b.value = "Good Job! Play Again?"
+    }
+    // 3 or less -- failed
+    else {
+      q.innerHTML = quote.quote + "<br><br>" + quote.author;
+      b.value = "You Suck. Play Again?"
     }
 
-    // Creates a radio button into which the question and answers are inputed
-    document.getElementById("question").innerHTML = questions[state.nextQuestion].question;
-    var radioHtml = '<br><br>';
+    // Get new data
+    reloadData();
+  } else {
+    // First Question, make sure answers are visible and button says NEXT
+    if (state.nextQuestion === 0) {
+      state.correctAnswers = 0;
+      var a = document.getElementById("answers");
+      a.style.visibility = "visible";
+      var b = document.getElementById("button1");
+      b.value = "NEXT";
+    }
+    //Last question -- Make sure the button is SUBMIT
+    else if (state.nextQuestion == questions.length - 1) {
+      var b = document.getElementById("button1");
+      b.value = "SUBMIT";
+    }
 
+    //Set the question
+    document.getElementById("question").innerHTML = questions[state.nextQuestion].question;
+
+    //Create HTML for answers
+    var radioHtml = '<table>';
     for (var i in questions[state.nextQuestion].answers) {
-      radioHtml += '<input type="radio" name="answerValue" value="' + i + '"';
+      radioHtml += '<tr><td><input type="radio" name="answerValue" value="' + i + '"';
+      //The First answer is always checked
       if (i == 0) {
         radioHtml += ' checked="checked"';
       }
-      radioHtml += '/><label>' + questions[state.nextQuestion].answers[i].value + '</label><br/>';
+
+      radioHtml += '/><span>' + questions[state.nextQuestion].answers[i].value + '</span></label></td></tr>';
     }
-    console.log(radioHtml);
-    document.getElementById("answers").innerHTML = radioHtml
+    radioHtml += "</table>";
+    document.getElementById("answers").innerHTML = radioHtml;
   }
-
 }
-// prints to the html
-var extractParameters = function() {
-  var query = window.location.hash.substring(1);
-  var params = query.split("&");
-
-  var return_data = {};
-  for (var i = 0; i < params.length; i++) {
-    var question = results[0];
-    return_data[keyvalue[0]] = question["question"];
-  }
-  return return_data;
-}
-
-
-// Code to assemble api link request correctly
-var url = "https://opentdb.com/api.php";
-let params = {
-  amount: "5"
-}
-
-var query_url = url + "?" + assembleQuery1(params);
-console.log(query_url);
-
-fetch(query_url)
-  .then(function(response) {
-    return response.json();
-  })
-  // Creates a new function to store an array of questions
-  .then(function(data) {
-    questions = new Array();
-    for (var i in data.results) {
-      // Grabs a question
-      var question = data.results[i];
-      var q = new Array();
-      for (var j in question.incorrect_answers) {
-        // pushes incorrect answers into a new array
-        q.push({
-          correct: 0,
-          value: question.incorrect_answers[j]
-        });
-      }
-      q.push({
-        correct: 1,
-        value: question.correct_answer
-      });
-      // shuffles answers so correct answer isn't always in the same place
-      shuffle(q);
-      // after shuffling push into an object with a question and an array of answers
-      questions.push({
-        question: question.question,
-        answers: q
-      });
-    }
-    console.log(data);
-    shuffle(questions);
-    console.log(questions);
-    NextQuestion();
-  });
-
-
 
 function checkResult() {
-  var answers = document.getElementsByName("answerValue");
-  var selectedAnswer;
+  if (state.nextQuestion < questions.length - 1 && state.nextQuestion >= 0) {
+    console.log("another answer");
+    var answers = document.getElementsByName("answerValue");
+    var selectedAnswer;
 
-  for (var i in answers) {
-    if (answers[i].checked) {
-      selectedAnswer = answers[i].value;
-    }
-  }
-
-  if (questions[state.nextQuestion].answers[selectedAnswer].correct) {
-    state.correctAnswers++;
-  }
-
-  NextQuestion();
-}
-
-// Supposed to call the quiz api when the button is clicked
-var button1 = document.getElementById("button1");
-button1.addEventListener("click", checkResult);
-
-
-
-
-
-// code to request dad joke api
-query_url = "https://icanhazdadjoke.com/";
-console.log(query_url);
-var request = new Request(query_url, {
-  headers: new Headers({
-    'Accept': 'text/plain'
-  })
-});
-
-fetch(request)
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(data) {
-    var results = data;
-    var correct = data.results[i];
-    for (var i in data.results) {
-      if (correct_answers >= 3) {
-        console.log(results);
-        // above supposed to attempt to print the joke
-        // if over three correct
-
+    for (var i in answers) {
+      if (answers[i].checked) {
+        selectedAnswer = answers[i].value;
       }
     }
 
-  });
+    if (questions[state.nextQuestion].answers[selectedAnswer].correct) {
+      state.correctAnswers++;
+    }
+  } else {
+    console.log("Not an answer");
+  }
 
-// The link as been altered so that the error was bypassed
- url = "https://cors-anywhere.herokuapp.com/http://quotesondesign.com/wp-json/posts";
- params = {
-     filterOrderBy: "rand",
-     filterPostsPerPage: "1"
- };
+  nextQuestion();
+}
 
- query_url = url + "?" + assembleQuery1(params);
- console.log(query_url);
+console.log("Loading data");
+//Find and hide answer section
+var a = document.getElementById("answers");
+a.style.visibility = "hidden";
 
- fetch(query_url)
-     .then(function(response) {
-          return response.json();
-     })
-     .then(function(data) {
-       var results = data;
-       console.log(results);
-     })
+//Find question pane and the button
+var q = document.getElementById("question");
+var b = document.getElementById("button1");
+b.addEventListener("click", checkResult);
+
+state = {
+  nextQuestion: -1,
+  correctAnswers: 0
+}
+q.innerHTML = "Let's Start!";
+b.value = "START";
+
+//Get new data
+reloadData();
