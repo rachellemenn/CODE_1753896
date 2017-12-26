@@ -225,8 +225,8 @@ state = {
   nextQuestion: -1,
   correctAnswers: 0
 }
-q.innerHTML = "Let's Start!";
-b.value = "START";
+ q.innerHTML = "Answer 3/5 questions correctly and you will be rewarded with a dad joke. <br><br> Answer 3/5 questions inccorectly and you will be punished with an inspirational quote. <br><br>";
+ b.value = "LET'S PLAY";
 
 //Get new data
 reloadData();
