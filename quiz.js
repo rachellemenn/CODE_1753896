@@ -96,10 +96,12 @@ function reloadData() {
     });
 
   // The link as been altered so that the error was bypassed
-  url = "https://cors-anywhere.herokuapp.com/http://quotesondesign.com/wp-json/posts";
+  url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
   params = {
-    filterOrderBy: "rand",
-    filterPostsPerPage: "1"
+    filterId: "randID",
+    filteOrderBy: "rand",
+    filterPostsPerPage: "20",
+    cache: false
   };
 
   query_url = url + "?" + assembleQuery1(params);
@@ -115,6 +117,7 @@ function reloadData() {
       quote = {
         author: results[0].title,
         quote: results[0].content
+
       };
     })
 
@@ -146,11 +149,15 @@ function nextQuestion() {
     if (state.correctAnswers > 3) {
       q.innerHTML = joke;
       b.value = "Good Job! Play Again?"
+      // document.getElementById("answers").appendChild(document.getElementById(button)
+      //  );
     }
     // 3 or less -- failed
     else {
       q.innerHTML = quote.quote + "<br><br>" + quote.author;
       b.value = "You Suck. Play Again?"
+      // document.getElementById("answers").appendChild(document.getElementById(button)
+      //  );
     }
 
     // Get new data
@@ -215,6 +222,9 @@ console.log("Loading data");
 //Find and hide answer section
 var a = document.getElementById("answers");
 a.style.visibility = "hidden";
+// document.getElementById("answers").appendChild(document.getElementById(button1)
+//  );
+
 
 //Find question pane and the button
 var q = document.getElementById("question");
@@ -225,8 +235,11 @@ state = {
   nextQuestion: -1,
   correctAnswers: 0
 }
- q.innerHTML = "Answer 3/5 questions correctly and you will be rewarded with a dad joke. <br><br> Answer 3/5 questions inccorectly and you will be punished with an inspirational quote. <br><br>";
+ q.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with an inspirational quote. <br><br>";
  b.value = "LET'S PLAY";
+ b.style.fontsize = "40px";
+ b.style.paddingtop = "0px";
+ b.style.paddingbottom = "0px";
 
 //Get new data
 reloadData();
