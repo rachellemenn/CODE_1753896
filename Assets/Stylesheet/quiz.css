@@ -160,6 +160,10 @@ body, * {
   flex: auto;
 }
 
+#answers td {
+  padding-bottom: 0.5em;
+}
+
 #answers input[type="radio"] {
   cursor: pointer;
   color: hsl(24, 100%, 50%);
@@ -184,7 +188,7 @@ body, * {
   vertical-align: top;
   float: left;
   margin-top: -2px;
-  padding: 10px;
+  padding-left: 15px;
   display: inline;
 }
 

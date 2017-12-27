@@ -98,10 +98,8 @@ function reloadData() {
   // The link as been altered so that the error was bypassed
   url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
   params = {
-    filterId: "randID",
-    filteOrderBy: "rand",
-    filterPostsPerPage: "20",
-    cache: false
+    "filter[orderby]": "rand",
+    "filter[posts_per_page]": "1"
   };
 
   query_url = url + "?" + assembleQuery1(params);
@@ -222,6 +220,7 @@ console.log("Loading data");
 //Find and hide answer section
 var a = document.getElementById("answers");
 a.style.visibility = "hidden";
+answers.Div.innerHTML = "";
 // document.getElementById("answers").appendChild(document.getElementById(button1)
 //  );
 
@@ -237,9 +236,9 @@ state = {
 }
  q.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with an inspirational quote. <br><br>";
  b.value = "LET'S PLAY";
- b.style.fontsize = "40px";
- b.style.paddingtop = "0px";
- b.style.paddingbottom = "0px";
+ // b.style.fontsize = "40px";
+ // b.style.paddingtop = "0px";
+ // b.style.paddingbottom = "0px";
 
 //Get new data
 reloadData();
