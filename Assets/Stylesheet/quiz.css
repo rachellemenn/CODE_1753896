@@ -152,7 +152,7 @@ body, * {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    align-items: left;
+    align-items: flex-start;
     flex: auto;
 }
 
@@ -203,7 +203,7 @@ body, * {
 
 @media screen and (max-width: 350px) {
   body {
-      width: 100vw;
+      width: 80vw;
   }
 
   .flex-container {
@@ -214,5 +214,10 @@ body, * {
       align-items: center;
       padding-top: 50px;
       padding-right: 70px;
+      max-width: 80vw;
+  }
+
+  #answers {
+    font-size: 80px;
   }
 }

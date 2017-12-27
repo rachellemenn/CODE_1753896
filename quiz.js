@@ -19,6 +19,7 @@ var state = {
     correctAnswers: 0
 };
 
+
 // Defines how the url will be constructed
 var assembleQuery1 = parameters => {
     var query_string = [];
