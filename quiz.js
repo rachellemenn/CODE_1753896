@@ -45,9 +45,11 @@ function shuffle(a) {
     }
 }
 
+
 // Reload data
 function reloadData() {
-    console.log("loading data");
+    // Hide button until questions load
+    button.style.visibility = "hidden";
     // Code to assemble api link request correctly
     var url = "https://opentdb.com/api.php";
     let params = {
@@ -87,6 +89,8 @@ function reloadData() {
             }
 
             shuffle(questions);
+            //show the button once everything loads
+            button.style.visibility = "visible";
         });
 
     // code to request dad joke api
@@ -109,7 +113,9 @@ function reloadData() {
     url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
     params = {
         "filter[orderby]": "rand",
-        "filter[posts_per_page]": "1"
+        "filter[posts_per_page]": "1",
+        timestamp: new Date().getTime()
+        // cache: false
     };
 
     query_url = url + "?" + assembleQuery1(params);
@@ -154,7 +160,8 @@ function nextQuestion() {
         }
         // If 3 or less incorrect answers -- fail
         else {
-            questionDiv.innerHTML = quote.quote + "<br><br>" + quote.author;
+            questionDiv.innerHTML = quote.quote
+            questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
             button.value = "You Suck. Play Again?"
         }
 
@@ -173,7 +180,7 @@ function nextQuestion() {
         }
 
         //Set the question
-        questionDiv.innherHTML = questions[state.nextQuestion].question;
+        questionDiv.innerHTML = questions[state.nextQuestion].question;
 
         //Create HTML for answers
         var radioHtml = '<table>';
@@ -213,7 +220,7 @@ function checkResult() {
     nextQuestion();
 }
 
- questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with an inspirational quote. <br><br>";
+ questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with a profound quote. <br><br>";
  button.value = "LET'S PLAY";
  // b.style.fontsize = "40px";
  // b.style.paddingtop = "0px";
