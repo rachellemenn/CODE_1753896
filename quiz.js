@@ -45,11 +45,20 @@ function shuffle(a) {
     }
 }
 
+//function used by JSONP response to parse a quote
+function processQuote(response) {
+    quote = {
+        author: response.quoteAuthor,
+        quote: response.quoteText
+    };
+
+    console.log(quote);
+}
 
 // Reload data
 function reloadData() {
-    // Hide button until questions load
     button.style.visibility = "hidden";
+
     // Code to assemble api link request correctly
     var url = "https://opentdb.com/api.php";
     let params = {
@@ -89,7 +98,6 @@ function reloadData() {
             }
 
             shuffle(questions);
-            //show the button once everything loads
             button.style.visibility = "visible";
         });
 
@@ -110,28 +118,42 @@ function reloadData() {
         });
 
     // The link as been altered so that the error was bypassed
-    url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
+    // url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
+    url = "https://cors-anywhere.herokuapp.com/http://api.forismatic.com/api/1.0/";
     params = {
-        "filter[orderby]": "rand",
-        "filter[posts_per_page]": "1",
-        timestamp: new Date().getTime()
+        method: "getQuote",
+        format: "jsnop",
+        lang: "en",
+        jsonp: "processQuote"
+        // "filter[orderby]": "rand",
+        // "filter[posts_per_page]": "1",
+        // timestamp: new Date().getTime()
         // cache: false
     };
 
     query_url = url + "?" + assembleQuery1(params);
     console.log(query_url);
 
-    fetch(query_url)
-        .then(response => response.json())
-        .then(data => {
-            var results = data;
-            console.log(results);
-            quote = {
-                author: results[0].title,
-                quote: results[0].content
+    //Create script element that loads JSONP from the URL
+    sc = document.createElement("script");
+    sc.src = query_url;
 
-            };
-        });
+    //Attach to document, which loads the JSONP script and runs it
+    document.querySelector("head").appendChild(sc);
+    //Remove the node - it already fired, loaded quote
+    sc.parentNode.removeChild(sc);
+
+    // fetch(query_url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         var results = data;
+    //         console.log(results);
+    //         quote = {
+    //             author: results[0].title,
+    //             quote: results[0].content
+    //
+    //         };
+    //     });
 
     state = {
         nextQuestion: -1,
@@ -160,9 +182,9 @@ function nextQuestion() {
         }
         // If 3 or less incorrect answers -- fail
         else {
-            questionDiv.innerHTML = quote.quote
+            questionDiv.innerHTML = quote.quote;
             questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
-            button.value = "You Suck. Play Again?"
+            button.value = "You Suck. Play Again?";
         }
 
         // Get new data

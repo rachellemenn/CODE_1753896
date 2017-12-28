@@ -202,7 +202,7 @@ body, * {
     }
 
 
-@media screen and (max-width: 350px) {
+/* @media screen and (max-width: 350px) {
   body {
       width: 80vw;
   }
@@ -220,5 +220,5 @@ body, * {
 
   #answers {
     font-size: 80px;
-  }
+  } */
 }
