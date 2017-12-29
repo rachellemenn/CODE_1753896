@@ -181,8 +181,8 @@ function nextQuestion() {
                 questionDiv.innerHTML = 'Communication error made it impossible to get a quote. But since you failed, here is one of mine:<br><br><div class="quoteText">&ldquo;It takes a fun and creative person to make a fun and creative experience.&rdquo;</div><br><br><div class="quoteAuthor">Rachelle Menn</div>';
             }
             else {
-              questionDiv.innerHTML = quote.quote;
-              questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
+                questionDiv.innerHTML = quote.quote;
+                questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
             }
             button.value = "You Suck. Play Again?";
         }
