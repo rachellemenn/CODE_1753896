@@ -19,6 +19,11 @@ var state = {
     correctAnswers: 0
 };
 
+// var error = {
+//   questionDiv.value = "Something went wrong! Please try again",
+//   button.value = "TRY AGAIN"
+// };
+
 
 // Defines how the url will be constructed
 var assembleQuery1 = parameters => {
@@ -99,6 +104,9 @@ function reloadData() {
 
             shuffle(questions);
             button.style.visibility = "visible";
+        })
+        .catch(error => {
+          console.log("A communication error(' + error + ') occured. Please try again");
         });
 
     // code to request dad joke api
@@ -117,18 +125,12 @@ function reloadData() {
             console.log(data);
         });
 
-    // The link as been altered so that the error was bypassed
-    // url = "https://cors-anywhere.herokuapp.com/https://quotesondesign.com/wp-json/posts";
-    url = "https://cors-anywhere.herokuapp.com/http://api.forismatic.com/api/1.0/";
+    url = "http://api.forismatic.com/api/1.0/";
     params = {
         method: "getQuote",
-        format: "jsnop",
+        format: "jsonp",
         lang: "en",
         jsonp: "processQuote"
-        // "filter[orderby]": "rand",
-        // "filter[posts_per_page]": "1",
-        // timestamp: new Date().getTime()
-        // cache: false
     };
 
     query_url = url + "?" + assembleQuery1(params);
@@ -142,18 +144,6 @@ function reloadData() {
     document.querySelector("head").appendChild(sc);
     //Remove the node - it already fired, loaded quote
     sc.parentNode.removeChild(sc);
-
-    // fetch(query_url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         var results = data;
-    //         console.log(results);
-    //         quote = {
-    //             author: results[0].title,
-    //             quote: results[0].content
-    //
-    //         };
-    //     });
 
     state = {
         nextQuestion: -1,
@@ -244,9 +234,7 @@ function checkResult() {
 
  questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with a profound quote. <br><br>";
  button.value = "LET'S PLAY";
- // b.style.fontsize = "40px";
- // b.style.paddingtop = "0px";
- // b.style.paddingbottom = "0px";
+
 
 console.log("Loading data");
 //Get new data

@@ -184,7 +184,7 @@ body, * {
         margin-top: -2px;
     }
 
-/* Changes the colour of the option selected */
+/* Changes the colour of the selected option */
 
     #answers input[type="radio"]:after {
         color: rgb(255, 102, 0);
@@ -200,25 +200,3 @@ body, * {
         background: rgb(255, 102, 0);
         background: hsl(24, 100%, 50%);
     }
-
-
-/* @media screen and (max-width: 350px) {
-  body {
-      width: 80vw;
-  }
-
-  .flex-container {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 50px;
-      padding-right: 70px;
-      max-width: 80vw;
-  }
-
-  #answers {
-    font-size: 80px;
-  } */
-}
