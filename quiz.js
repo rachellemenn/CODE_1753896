@@ -19,12 +19,6 @@ var state = {
     correctAnswers: 0
 };
 
-// var error = {
-//   questionDiv.value = "Something went wrong! Please try again",
-//   button.value = "TRY AGAIN"
-// };
-
-
 // Defines how the url will be constructed
 var assembleQuery1 = parameters => {
     var query_string = [];
@@ -63,6 +57,9 @@ function processQuote(response) {
 // Reload data
 function reloadData() {
     button.style.visibility = "hidden";
+    questions = null;
+    quote = null;
+    joke = null;
 
     // Code to assemble api link request correctly
     var url = "https://opentdb.com/api.php";
@@ -106,7 +103,10 @@ function reloadData() {
             button.style.visibility = "visible";
         })
         .catch(error => {
-          console.log("A communication error(' + error + ') occured. Please try again");
+            console.log("A communication error(' + error + ') occured. Please try again");
+            questionDiv.innerHTML = "<br>A communication error occurred. Please try again";
+            button.value = "TRY AGAIN";
+            button.style.visibility = "visible";
         });
 
     // code to request dad joke api
@@ -167,13 +167,23 @@ function nextQuestion() {
 
         // If 4 or 5 correct answers -- pass
         if (state.correctAnswers > 3) {
-            questionDiv.innerHTML = joke;
+            if (joke === null) {
+                questionDiv.innerHTML = "Communication error made it impossible to get a joke. But you did well!";
+            }
+            else {
+                questionDiv.innerHTML = joke;
+            }
             button.value = "Good Job! Play Again?";
         }
         // If 3 or less incorrect answers -- fail
         else {
-            questionDiv.innerHTML = quote.quote;
-            questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
+            if (quote === null) {
+                questionDiv.innerHTML = 'Communication error made it impossible to get a quote. But since you failed, here is one of mine:<br><br><div class="quoteText">&ldquo;It takes a fun and creative person to make a fun and creative experience.&rdquo;</div><br><br><div class="quoteAuthor">Rachelle Menn</div>';
+            }
+            else {
+              questionDiv.innerHTML = quote.quote;
+              questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
+            }
             button.value = "You Suck. Play Again?";
         }
 
@@ -229,7 +239,13 @@ function checkResult() {
         console.log("Not an answer");
     }
 
-    nextQuestion();
+    if (question === null) {
+        reloadData();
+    }
+    else {
+        nextQuestion();
+    }
+
 }
 
  questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with a profound quote. <br><br>";
