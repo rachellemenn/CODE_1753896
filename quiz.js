@@ -100,10 +100,14 @@ function reloadData() {
             }
 
             shuffle(questions);
+
+            //Since the question is loaded, we can let users press the button
             button.style.visibility = "visible";
         })
         .catch(error => {
             console.log("A communication error(' + error + ') occured. Please try again");
+
+            //Set the question div to the error message and the button will be set appropriately
             questionDiv.innerHTML = "<br>A communication error occurred. Please try again";
             button.value = "TRY AGAIN";
             button.style.visibility = "visible";
@@ -168,22 +172,28 @@ function nextQuestion() {
         // If 4 or 5 correct answers -- pass
         if (state.correctAnswers > 3) {
             if (joke === null) {
+                //Since there is no joke, show the error message
                 questionDiv.innerHTML = "Communication error made it impossible to get a joke. But you did well!";
             }
             else {
+                //Joke loaded, success. Show the joke
                 questionDiv.innerHTML = joke;
             }
+
             button.value = "Good Job! Play Again?";
         }
         // If 3 or less incorrect answers -- fail
         else {
             if (quote === null) {
-                questionDiv.innerHTML = 'Communication error made it impossible to get a quote. But since you failed, here is one of mine:<br><br><div class="quoteText">&ldquo;It takes a fun and creative person to make a fun and creative experience.&rdquo;</div><br><br><div class="quoteAuthor">Rachelle Menn</div>';
+                //Since there is no quote, show the error message and a static quote
+                questionDiv.innerHTML = 'Communication error made it impossible to get a quote. But since you failed, here is one of mine:<br><br><div class="quoteText">&ldquo;It takes a fun and creative person to make a fun and creative experience.&rdquo;</div><br><br><div class="quoteAuthor">RM</div>';
             }
             else {
+                //Have a quote loaded, success. Show the quote
                 questionDiv.innerHTML = quote.quote;
                 questionDiv.innerHTML = '<div class="quoteText">&ldquo;' + questionDiv.innerText.trim() + '&rdquo;</div><br><br><div class="quoteAuthor">' + quote.author + '</div>';
             }
+
             button.value = "You Suck. Play Again?";
         }
 
@@ -204,10 +214,11 @@ function nextQuestion() {
         //Set the question
         questionDiv.innerHTML = questions[state.nextQuestion].question;
 
-        //Create HTML for answers
+        //Create HTML for answers. Put it into a table to assure proper alignment
         var radioHtml = '<table>';
         for (var i in questions[state.nextQuestion].answers) {
             radioHtml += '<tr><td><input type="radio" name="answerValue" value="' + i + '"';
+
             //The First answer is always checked
             if (i === "0") {
                 radioHtml += ' checked="checked"';
@@ -215,14 +226,18 @@ function nextQuestion() {
 
             radioHtml += '/><span>' + questions[state.nextQuestion].answers[i].value + '</span></label></td></tr>';
         }
+
         radioHtml += "</table>";
         answersDiv.innerHTML = radioHtml;
     }
 }
 
+//This function executes when the button is pressed. It checks current answer if we're showing a question
 function checkResult() {
     if (state.nextQuestion < questions.length - 1 && state.nextQuestion >= 0) {
         console.log("another answer");
+
+        //Get the button values
         var answers = document.getElementsByName("answerValue");
         var selectedAnswer;
 
@@ -235,23 +250,27 @@ function checkResult() {
         if (questions[state.nextQuestion].answers[selectedAnswer].correct) {
             state.correctAnswers++;
         }
-    } else {
+    }
+    else {
         console.log("Not an answer");
     }
 
+    //If there are no questions, try reloading
     if (question === null) {
         reloadData();
     }
+    //Have questions, go to the next one
     else {
         nextQuestion();
     }
 
 }
 
- questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with a profound quote. <br><br>";
+//Initialise home screen
+ questionDiv.innerHTML = "Answer at least 4 questions correctly and you will be rewarded with a dad joke. &nbsp; &nbsp; &nbsp; <br><br> Answer at least 3 inccorectly and you will be punished with an inspirational quote. <br><br>";
  button.value = "LET'S PLAY";
 
-
 console.log("Loading data");
+
 //Get new data
 reloadData();
